@@ -24,9 +24,9 @@ jobs:
       - name: Ejecutar Hola Mundo
         run: node app.js
 
-      - name: Generar mensaje con Cowasay
+      - name: Generar mensaje con Cowsay
         run: |
-          cowsay "Hola Mundo desde GitHub Actions!♥" > cowsay.txt
+          cowsay "Hola Mundo desde GitHub Actions!" > cowsay.txt
           cat cowsay.txt
 
       - name: Enviar Cowasay a ntfy
@@ -36,5 +36,6 @@ jobs:
             -H "Title: GitHub Actions - Cowasay" \
             -H "Priority: default" \
             -H "Tags: github,ci,cow" \
-            -d "$(cat cowsay.txt)" \
+            -H "Content-Type: text/plain" \
+            --data-binary "@cowsay.txt" \
             https://ntfy.sh/devops-itla
