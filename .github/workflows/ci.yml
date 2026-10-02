@@ -18,16 +18,23 @@ jobs:
         with:
           node-version: 22
 
+      - name: Instalar Cowasay
+        run: npm install -g cowsay
+
       - name: Ejecutar Hola Mundo
         run: node app.js
 
-      - name: Notificar a ntfy
+      - name: Generar mensaje con Cowasay
+        run: |
+          cowsay "Hola Mundo desde GitHub Actions!♥" > cowsay.txt
+          cat cowsay.txt
+
+      - name: Enviar Cowasay a ntfy
         if: always()
         run: |
           curl \
-            -H "Title: GitHub Actions - Hola Mundo" \
+            -H "Title: GitHub Actions - Cowasay" \
             -H "Priority: default" \
-            -H "Tags: github,ci" \
-            -H "Workflow - Estado: ${{ job.status }}" \
-            -d "Se ha ejecutado el workflow de Hola Mundo en GitHub Actions." \
+            -H "Tags: github,ci,cow" \
+            -d "$(cat cowsay.txt)" \
             https://ntfy.sh/devops-itla
