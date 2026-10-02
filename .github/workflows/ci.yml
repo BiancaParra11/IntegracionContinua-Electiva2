@@ -32,11 +32,10 @@ jobs:
       - name: Enviar Cowsay a ntfy
         if: always()
         run: |
-          # Creamos el mensaje con formato Markdown nativo de ntfy
-          echo "### 🐮 ¡Ejecución Exitosa!" > ntfy-message.txt
-          echo "\`\`\`" >> ntfy-message.txt
+          echo '### 🐮 ¡Ejecución Exitosa!' > ntfy-message.txt
+          echo '```' >> ntfy-message.txt
           cat cowsay.txt >> ntfy-message.txt
-          echo "\`\`\`" >> ntfy-message.txt
+          echo '```' >> ntfy-message.txt
 
           curl \
             -H "Title: GitHub Actions - Cowsay" \
@@ -44,4 +43,4 @@ jobs:
             -H "Tags: github,ci,cow" \
             -H "Markdown: yes" \
             --data-binary "@ntfy-message.txt" \
-            [https://ntfy.sh/devops-itla](https://ntfy.sh/devops-itla)
+            https://ntfy.sh/devops-itla
