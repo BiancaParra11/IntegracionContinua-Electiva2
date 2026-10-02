@@ -18,7 +18,7 @@ jobs:
         with:
           node-version: 22
 
-      - name: Instalar Cowasay
+      - name: Instalar Cowsay
         run: npm install -g cowsay
 
       - name: Ejecutar Hola Mundo
@@ -29,13 +29,19 @@ jobs:
           cowsay "Hola Mundo desde GitHub Actions!" > cowsay.txt
           cat cowsay.txt
 
-      - name: Enviar Cowasay a ntfy
+      - name: Enviar Cowsay a ntfy
         if: always()
         run: |
+          # Creamos el mensaje con formato Markdown nativo de ntfy
+          echo "### 🐮 ¡Ejecución Exitosa!" > ntfy-message.txt
+          echo "\`\`\`" >> ntfy-message.txt
+          cat cowsay.txt >> ntfy-message.txt
+          echo "\`\`\`" >> ntfy-message.txt
+
           curl \
-            -H "Title: GitHub Actions - Cowasay" \
+            -H "Title: GitHub Actions - Cowsay" \
             -H "Priority: default" \
             -H "Tags: github,ci,cow" \
-            -H "Content-Type: text/plain" \
-            --data-binary "@cowsay.txt" \
-            https://ntfy.sh/devops-itla
+            -H "Markdown: yes" \
+            --data-binary "@ntfy-message.txt" \
+            [https://ntfy.sh/devops-itla](https://ntfy.sh/devops-itla)
