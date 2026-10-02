@@ -26,13 +26,12 @@ jobs:
 
       - name: Generar mensaje con Cowsay
         run: |
-          cowsay "Hola Mundo desde GitHub Actions!" > cowsay.txt
+          cowsay "Hola Mundo desde GitHub Actions! ♥" > cowsay.txt
           cat cowsay.txt
 
       - name: Enviar Cowsay a ntfy
         if: always()
         run: |
-          echo '### 🐮 ¡Ejecución Exitosa!' > ntfy-message.txt
           echo '```' >> ntfy-message.txt
           cat cowsay.txt >> ntfy-message.txt
           echo '```' >> ntfy-message.txt
